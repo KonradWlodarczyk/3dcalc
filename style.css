@@ -1,0 +1,248 @@
+:root {
+    --zen-bg: #F5F7F5;
+    --zen-surface: #FFFFFF;
+    --zen-accent: #76947A;
+    --zen-accent-hover: #5F7863;
+    --zen-text: #3A423D;
+    --zen-muted: #8A948F;
+    --zen-border: #E3E8E5;
+    --zen-danger: #C28181;
+    --zen-success: #81A687;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--zen-bg);
+    color: var(--zen-text);
+    line-height: 1.6;
+    margin: 0;
+    padding: 30px 15px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.card {
+    background: var(--zen-surface);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+    margin-bottom: 24px;
+    border: 1px solid rgba(227, 232, 229, 0.5);
+}
+
+/* Strefa Drop Zone G-code */
+.drop-zone {
+    border: 2px dashed var(--zen-accent);
+    background: #FAFBFA;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.drop-zone.dragover {
+    background: #EDF2EE;
+    transform: scale(1.01);
+}
+
+.drop-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Nawigacja zakładkowa */
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--zen-muted);
+    font-size: 1rem;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-btn.active {
+    color: var(--zen-accent);
+    border-bottom: 2px solid var(--zen-accent);
+    font-weight: 600;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Formularze */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.help-text {
+    font-size: 0.78rem;
+    color: var(--zen-muted);
+    display: block;
+    margin-top: -2px;
+    margin-bottom: 6px;
+}
+
+input[type="text"], input[type="number"], select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--zen-border);
+    border-radius: 8px;
+    box-sizing: border-box;
+    background-color: #FAFCFA;
+    color: var(--zen-text);
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--zen-accent);
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+@media (min-width: 600px) {
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+}
+
+/* Przyciski */
+button {
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    box-sizing: border-box;
+}
+
+.primary-btn {
+    background-color: var(--zen-accent);
+    color: white;
+    width: 100%;
+}
+
+.primary-btn:hover { background-color: var(--zen-accent-hover); }
+
+.outline-btn {
+    background: transparent;
+    color: var(--zen-accent);
+    border: 1px solid var(--zen-accent);
+    width: 100%;
+}
+
+.outline-btn:hover {
+    background: var(--zen-accent);
+    color: white;
+}
+
+.danger-btn {
+    background: transparent;
+    color: var(--zen-danger);
+    border: 1px solid var(--zen-danger);
+}
+
+.danger-btn:hover { background: var(--zen-danger); color: white; }
+.success-accent { color: var(--zen-secondary); border-color: var(--zen-success); color: var(--zen-success); }
+.success-accent:hover { background: var(--zen-success); color: white; }
+
+/* Dynamiczne wiersze szpul */
+.filament-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr auto;
+    gap: 12px;
+    align-items: center;
+    background: #FAFCFA;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    border: 1px solid var(--zen-border);
+}
+
+.remove-row-btn {
+    background: transparent;
+    color: var(--zen-danger);
+    font-size: 1.1rem;
+    padding: 4px 8px;
+}
+
+/* Sekcja sprzedaży */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+    padding: 14px;
+    background: #FAFCFA;
+    border: 1px solid var(--zen-border);
+    border-radius: 8px;
+}
+
+.toggle-container input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--zen-accent);
+}
+
+#sales-section {
+    display: none;
+    border-left: 2px solid var(--zen-accent);
+    padding-left: 16px;
+    margin-bottom: 24px;
+}
+
+/* Wyniki i Historia */
+.result-box {
+    background: #EDF1EE;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 24px;
+    text-align: center;
+}
+
+.result-value {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--zen-accent);
+}
+
+.resource-list .list-item, #historyList .list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px;
+    border-bottom: 1px solid var(--zen-border);
+}
+
+.resource-list .list-item:last-child, #historyList .list-item:last-child { border-bottom: none; }
+.history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--zen-border); padding-bottom: 10px; }
+.history-actions { display: flex; gap: 10px; }
