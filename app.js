@@ -9,8 +9,125 @@ let machines = JSON.parse(localStorage.getItem('zenMachines')) || [
 let historyData = JSON.parse(localStorage.getItem('zenHistory')) || [];
 let currentTotal = 0;
 
+// --- SYSTEM JĘZYKOWY (i18n) ---
+const i18n = {
+    pl: {
+        // Nawigacja
+        tabCalc: "Kalkulator",
+        tabRes: "Zasoby i Maszyny",
+        tabHist: "Historia i Eksport",
+        
+        // Zakładka 1: Kalkulator
+        dropZoneTitle: "<strong>Upuść plik .gcode tutaj</strong> lub kliknij, aby załadować",
+        dropZoneHelp: "Automatycznie odczytamy czas i wagę ze slicera",
+        projDetails: "Szczegóły Projektu",
+        projNameLabel: "Nazwa projektu",
+        projNamePlaceholder: "np. Obudowa elektroniki",
+        machineProfile: "Profil drukarki",
+        materialsTitle: "Zużycie Materiałów (Multi-color)",
+        addSpoolBtn: "+ Dodaj kolejną szpulę do projektu",
+        wasteLabel: "Odpady materiału / Zrzuty (g)",
+        exploitTitle: "Eksploatacja i Czas",
+        timeLabel: "Czas druku (godziny)",
+        powerLabel: "Pobór mocy maszyny (W)",
+        energyLabel: "Cena energii (waluta/kWh)",
+        calcBtn: "Przelicz i wyceń",
+        totalCostLabel: "Całkowity koszt projektu:",
+        alertAnalyzed: "Plik przeanalizowany! Przenieśliśmy dane do formularza.",
+        alertError: "Najpierw przelicz koszty!",
+
+        // Zakładka 2: Zasoby i Maszyny
+        spoolTitle: "Magazyn Szpul",
+        spoolNameLabel: "Nazwa / Kolor filamentu",
+        spoolNamePlaceholder: "np. Bambu PLA Matte Green",
+        spoolPriceLabel: "Cena za 1 kg (waluta)",
+        addSpoolToStorageBtn: "Dodaj do magazynu",
+        fleetTitle: "Flota Maszyn",
+        machineNameLabel: "Nazwa drukarki",
+        machineNamePlaceholder: "np. Bambu Lab P2S (AMS)",
+        machinePowerLabel: "Średni pobór mocy (W)",
+        addMachineBtn: "Dodaj maszynę",
+
+        // Zakładka 3: Historia
+        historyTitle: "Zapisane projekty",
+        exportBtn: "💾 Eksportuj do CSV",
+        clearHistoryBtn: "Wyczyść historię"
+    },
+    en: {
+        // Navigation
+        tabCalc: "Calculator",
+        tabRes: "Resources & Machines",
+        tabHist: "History & Export",
+        
+        // Tab 1: Calculator
+        dropZoneTitle: "<strong>Drop .gcode file here</strong> or click to load",
+        dropZoneHelp: "We will automatically read time and weight from the slicer",
+        projDetails: "Project Details",
+        projNameLabel: "Project name",
+        projNamePlaceholder: "e.g. Electronics Enclosure",
+        machineProfile: "Printer profile",
+        materialsTitle: "Material Usage (Multi-color)",
+        addSpoolBtn: "+ Add another spool to project",
+        wasteLabel: "Material waste / Poop (g)",
+        exploitTitle: "Operation & Time",
+        timeLabel: "Print time (hours)",
+        powerLabel: "Machine power draw (W)",
+        energyLabel: "Energy price (currency/kWh)",
+        calcBtn: "Calculate Cost",
+        totalCostLabel: "Total project cost:",
+        alertAnalyzed: "File analyzed! Data transferred to the form.",
+        alertError: "Calculate costs first!",
+
+        // Tab 2: Resources & Machines
+        spoolTitle: "Spool Storage",
+        spoolNameLabel: "Filament Name / Color",
+        spoolNamePlaceholder: "e.g. Bambu PLA Matte Green",
+        spoolPriceLabel: "Price per 1 kg (currency)",
+        addSpoolToStorageBtn: "Add to storage",
+        fleetTitle: "Machine Fleet",
+        machineNameLabel: "Printer name",
+        machineNamePlaceholder: "e.g. Bambu Lab X1C",
+        machinePowerLabel: "Average power draw (W)",
+        addMachineBtn: "Add machine",
+
+        // Tab 3: History
+        historyTitle: "Saved Projects",
+        exportBtn: "💾 Export to CSV",
+        clearHistoryBtn: "Clear history"
+    }
+};
+
+let currentLang = localStorage.getItem('zenLang') || 'pl';
+
+function setLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('zenLang', lang);
+
+    // Przełączanie aktywnego przycisku
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('btn-' + lang).classList.add('active');
+
+    // Tłumaczenie elementów w DOM
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[lang][key]) {
+            if (el.tagName === 'INPUT' && el.type === 'text') {
+                el.placeholder = i18n[lang][key];
+            } else {
+                el.innerHTML = i18n[lang][key];
+            }
+        }
+    });
+
+    // Zmiana symbolu waluty w kalkulatorze (opcjonalne, dla estetyki)
+    const currency = document.getElementById('currencySymbol');
+    if (currency) currency.innerText = lang === 'pl' ? 'zł' : '$';
+}
+
 // --- INICJALIZACJA INTERFEJSU ---
 window.onload = function() {
+    setLanguage(currentLang);
+    initDragAndDrop();
     initDragAndDrop();
     renderSpools();
     renderMachines();
