@@ -35,6 +35,14 @@ const i18n = {
         totalCostLabel: "Całkowity koszt projektu:",
         alertAnalyzed: "Plik przeanalizowany! Przenieśliśmy dane do formularza.",
         alertError: "Najpierw przelicz koszty!",
+        enableSalesLabel: "Aktywuj sekcję sprzedaży (Analiza komercyjna)",
+        commercialTitle: "Kalkulacja Komercyjna",
+        laborLabel: "Praca własna (godziny)",
+        laborHelp: "Przygotowanie pliku, post-processing",
+        rateLabel: "Stawka godzinowa (waluta/h)",
+        failRateLabel: "Bufor ryzyka / Failure rate (%)",
+        marginLabel: "Marża zysku (%)",
+        saveBtn: "Zapisz wycenę w historii",
 
         // Zakładka 2: Zasoby i Maszyny
         spoolTitle: "Magazyn Szpul",
@@ -77,6 +85,14 @@ const i18n = {
         totalCostLabel: "Total project cost:",
         alertAnalyzed: "File analyzed! Data transferred to the form.",
         alertError: "Calculate costs first!",
+        enableSalesLabel: "Activate sales section (Commercial analysis)",
+        commercialTitle: "Commercial Calculation",
+        laborLabel: "Manual labor (hours)",
+        laborHelp: "Slicing, post-processing",
+        rateLabel: "Hourly rate (currency/h)",
+        failRateLabel: "Risk buffer / Failure rate (%)",
+        marginLabel: "Profit margin (%)",
+        saveBtn: "Save to history",
 
         // Tab 2: Resources & Machines
         spoolTitle: "Spool Storage",
