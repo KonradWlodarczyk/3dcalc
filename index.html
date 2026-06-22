@@ -10,62 +10,72 @@
 <body>
 
 <div class="container">
+    <div class="lang-switcher">
+        <button id="btn-pl" class="lang-btn active" onclick="setLanguage('pl')">PL</button>
+        <button id="btn-en" class="lang-btn" onclick="setLanguage('en')">EN</button>
+    </div>
+
     <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('calc')">Kalkulator</button>
-        <button class="tab-btn" onclick="switchTab('resources')">Zasoby i Maszyny</button>
-        <button class="tab-btn" onclick="switchTab('history')">Historia i Eksport</button>
+        <button class="tab-btn active" onclick="switchTab('calc')" data-i18n="tabCalc">Kalkulator</button>
+        <button class="tab-btn" onclick="switchTab('resources')" data-i18n="tabRes">Zasoby i Maszyny</button>
+        <button class="tab-btn" onclick="switchTab('history')" data-i18n="tabHist">Historia i Eksport</button>
     </div>
 
     <div id="tab-calc" class="tab-content active">
         <div class="card drop-zone" id="dropZone">
             <div class="drop-zone-content">
                 <span class="drop-icon">📄</span>
-                <p><strong>Upuść plik .gcode tutaj</strong> lub kliknij, aby załadować</p>
-                <span class="help-text">Automatycznie odczytamy czas i wagę ze slicera (Bambu Studio, Orca, Prusa)</span>
+                <p data-i18n="dropZoneTitle"><strong>Upuść plik .gcode tutaj</strong> lub kliknij, aby załadować</p>
+                <span class="help-text" data-i18n="dropZoneHelp">Automatycznie odczytamy czas i wagę ze slicera</span>
             </div>
             <input type="file" id="gcodeFileInput" accept=".gcode" style="display: none;">
         </div>
 
         <div class="card">
-            <h2>Szczegóły Projektu</h2>
+            <h2 data-i18n="projDetails">Szczegóły Projektu</h2>
             <div class="form-group">
-                <label>Nazwa projektu</label>
-                <input type="text" id="projectName" placeholder="np. Obudowa elektroniki">
+                <label data-i18n="projNameLabel">Nazwa projektu</label>
+                <input type="text" id="projectName" data-i18n="projNamePlaceholder" placeholder="np. Obudowa elektroniki">
+            </div>
+            
+            <div class="form-group">
+                <label data-i18n="machineProfile">Profil drukarki</label>
+                <select id="machineProfileSelect" onchange="onMachineChange()"></select>
             </div>
 
-            <div class="form-group">
-                <label>Profil drukarki</label>
-                <span class="help-text">Automatycznie dostosuje pobór mocy i parametry specyficzne dla modelu</span>
-                <select id="machineProfileSelect" onchange="onMachineChange()">
-                    </select>
-            </div>
-
-            <h3>Zużycie Materiałów (Obsługa Multi-color)</h3>
-            <div id="project-filaments">
-                </div>
-            <button class="outline-btn" onclick="addFilamentRow()">+ Dodaj kolejną szpulę do projektu</button>
-
+            <h3 data-i18n="materialsTitle">Zużycie Materiałów (Multi-color)</h3>
+            <div id="project-filaments"></div>
+            <button class="outline-btn" onclick="addFilamentRow()" data-i18n="addSpoolBtn">+ Dodaj kolejną szpulę do projektu</button>
+            
             <div class="form-group" style="margin-top: 20px;">
-                <label>Odpady materiału / Zrzuty (g)</label>
-                <span class="help-text">Wieża czyszcząca, podpory, zrzuty AMS (koszt uśredniany automatycznie)</span>
+                <label data-i18n="wasteLabel">Odpady materiału / Zrzuty (g)</label>
                 <input type="number" id="wasteWeight" value="0" min="0">
             </div>
 
-            <h3 style="margin-top: 30px;">Eksploatacja i Czas</h3>
+            <h3 style="margin-top: 30px;" data-i18n="exploitTitle">Eksploatacja i Czas</h3>
             <div class="grid-2">
                 <div class="form-group">
-                    <label>Czas druku (godziny)</label>
+                    <label data-i18n="timeLabel">Czas druku (godziny)</label>
                     <input type="number" id="printTime" value="0" step="0.01" min="0">
                 </div>
                 <div class="form-group">
-                    <label>Pobór mocy maszyny (W)</label>
+                    <label data-i18n="powerLabel">Pobór mocy maszyny (W)</label>
                     <input type="number" id="printerPower" value="300" min="0">
                 </div>
                 <div class="form-group">
-                    <label>Cena energii (zł/kWh)</label>
+                    <label data-i18n="energyLabel">Cena energii (zł/kWh)</label>
                     <input type="number" id="electricityPrice" value="1.10" step="0.01" min="0">
                 </div>
             </div>
+
+            <button class="primary-btn" onclick="calculateCost()" data-i18n="calcBtn">Przelicz i wyceń</button>
+
+            <div class="result-box">
+                <div class="result-label" data-i18n="totalCostLabel">Całkowity koszt projektu:</div>
+                <div class="result-value"><span id="totalCost">0.00</span> <span id="currencySymbol">zł</span></div>
+            </div>
+        </div>
+    </div>
 
             <div class="toggle-container">
                 <input type="checkbox" id="enableSales">
@@ -106,36 +116,36 @@
         </div>
     </div>
 
-    <div id="tab-resources" class="tab-content">
+   <div id="tab-resources" class="tab-content">
         <div class="card">
-            <h2>Magazyn Szpul</h2>
+            <h2 data-i18n="spoolTitle">Magazyn Szpul</h2>
             <div class="grid-2">
                 <div class="form-group">
-                    <label>Nazwa / Kolor filamentu</label>
-                    <input type="text" id="newSpoolName" placeholder="np. Bambu PLA Matte Green">
+                    <label data-i18n="spoolNameLabel">Nazwa / Kolor filamentu</label>
+                    <input type="text" id="newSpoolName" data-i18n="spoolNamePlaceholder" placeholder="np. Bambu PLA Matte Green">
                 </div>
                 <div class="form-group">
-                    <label>Cena za 1 kg (zł)</label>
+                    <label data-i18n="spoolPriceLabel">Cena za 1 kg (zł)</label>
                     <input type="number" id="newSpoolPrice" value="95" step="0.01" min="0">
                 </div>
             </div>
-            <button class="primary-btn" onclick="addSpool()">Dodaj do magazynu</button>
+            <button class="primary-btn" onclick="addSpool()" data-i18n="addSpoolToStorageBtn">Dodaj do magazynu</button>
             <div id="spoolList" class="resource-list" style="margin-top: 20px;"></div>
         </div>
 
         <div class="card">
-            <h2>Flota Maszyn</h2>
+            <h2 data-i18n="fleetTitle">Flota Maszyn</h2>
             <div class="grid-2">
                 <div class="form-group">
-                    <label>Nazwa drukarki</label>
-                    <input type="text" id="newMachineName" placeholder="np. Bambu Lab P2S (AMS)">
+                    <label data-i18n="machineNameLabel">Nazwa drukarki</label>
+                    <input type="text" id="newMachineName" data-i18n="machineNamePlaceholder" placeholder="np. Bambu Lab P2S (AMS)">
                 </div>
                 <div class="form-group">
-                    <label>Średni pobór mocy (W)</label>
+                    <label data-i18n="machinePowerLabel">Średni pobór mocy (W)</label>
                     <input type="number" id="newMachinePower" value="300" min="0">
                 </div>
             </div>
-            <button class="primary-btn" onclick="addMachine()">Dodaj maszynę</button>
+            <button class="primary-btn" onclick="addMachine()" data-i18n="addMachineBtn">Dodaj maszynę</button>
             <div id="machineList" class="resource-list" style="margin-top: 20px;"></div>
         </div>
     </div>
@@ -143,10 +153,10 @@
     <div id="tab-history" class="tab-content">
         <div class="card">
             <div class="history-header">
-                <h2>Zapisane projekty</h2>
+                <h2 data-i18n="historyTitle">Zapisane projekty</h2>
                 <div class="history-actions">
-                    <button class="outline-btn success-accent" onclick="exportToCSV()">💾 Eksportuj do CSV</button>
-                    <button class="danger-btn" onclick="clearHistory()">Wyczyść historię</button>
+                    <button class="outline-btn success-accent" onclick="exportToCSV()" data-i18n="exportBtn">💾 Eksportuj do CSV</button>
+                    <button class="danger-btn" onclick="clearHistory()" data-i18n="clearHistoryBtn">Wyczyść historię</button>
                 </div>
             </div>
             <div id="historyList"></div>
