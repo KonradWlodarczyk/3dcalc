@@ -21,7 +21,7 @@
         <button class="tab-btn" onclick="switchTab('history')" data-i18n="tabHist">Historia i Eksport</button>
     </div>
 
-    <div id="tab-calc" class="tab-content active">
+   <div id="tab-calc" class="tab-content active">
         <div class="card drop-zone" id="dropZone">
             <div class="drop-zone-content">
                 <span class="drop-icon">📄</span>
@@ -68,51 +68,42 @@
                 </div>
             </div>
 
+            <div class="toggle-container">
+                <input type="checkbox" id="enableSales">
+                <label for="enableSales" data-i18n="enableSalesLabel">Aktywuj sekcję sprzedaży (Analiza komercyjna)</label>
+            </div>
+
+            <div id="sales-section">
+                <h3 data-i18n="commercialTitle">Kalkulacja Komercyjna</h3>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label data-i18n="laborLabel">Praca własna (godziny)</label>
+                        <span class="help-text" data-i18n="laborHelp">Przygotowanie pliku, post-processing</span>
+                        <input type="number" id="laborTime" value="0.5" step="0.1" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="rateLabel">Stawka godzinowa (zł/h)</label>
+                        <input type="number" id="laborRate" value="60" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="failRateLabel">Bufor ryzyka / Failure rate (%)</label>
+                        <input type="number" id="failureRate" value="10" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="marginLabel">Marża zysku (%)</label>
+                        <input type="number" id="profitMargin" value="30" min="0">
+                    </div>
+                </div>
+            </div>
+
             <button class="primary-btn" onclick="calculateCost()" data-i18n="calcBtn">Przelicz i wyceń</button>
 
             <div class="result-box">
                 <div class="result-label" data-i18n="totalCostLabel">Całkowity koszt projektu:</div>
                 <div class="result-value"><span id="totalCost">0.00</span> <span id="currencySymbol">zł</span></div>
             </div>
-        </div>
-    </div>
-
-            <div class="toggle-container">
-                <input type="checkbox" id="enableSales">
-                <label for="enableSales">Aktywuj sekcję sprzedaży (Analiza komercyjna)</label>
-            </div>
-
-            <div id="sales-section">
-                <h3>Kalkulacja Komercyjna</h3>
-                <div class="grid-2">
-                    <div class="form-group">
-                        <label>Praca własna (godziny)</label>
-                        <span class="help-text">Przygotowanie pliku, post-processing</span>
-                        <input type="number" id="laborTime" value="0.5" step="0.1" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Stawka godzinowa (zł/h)</label>
-                        <input type="number" id="laborRate" value="60" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Bufor ryzyka / Failure rate (%)</label>
-                        <input type="number" id="failureRate" value="10" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label>Marża zysku (%)</label>
-                        <input type="number" id="profitMargin" value="30" min="0">
-                    </div>
-                </div>
-            </div>
-
-            <button class="primary-btn" onclick="calculateCost()">Przelicz i wyceń</button>
-
-            <div class="result-box">
-                <div class="result-label">Całkowity koszt projektu:</div>
-                <div class="result-value"><span id="totalCost">0.00</span> zł</div>
-            </div>
             
-            <button class="outline-btn" onclick="saveProject()" style="margin-top: 16px;">Zapisz wycenę w historii</button>
+            <button class="outline-btn" onclick="saveProject()" style="margin-top: 16px;" data-i18n="saveBtn">Zapisz wycenę w historii</button>
         </div>
     </div>
 
