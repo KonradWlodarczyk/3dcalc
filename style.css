@@ -246,3 +246,28 @@ button {
 .resource-list .list-item:last-child, #historyList .list-item:last-child { border-bottom: none; }
 .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--zen-border); padding-bottom: 10px; }
 .history-actions { display: flex; gap: 10px; }
+
+/* Przełącznik języka */
+.lang-switcher {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.lang-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    background: transparent;
+    border: 1px solid var(--zen-border);
+    color: var(--zen-muted);
+    border-radius: 6px;
+    width: auto;
+}
+
+.lang-btn.active {
+    background: var(--zen-accent);
+    color: white;
+    border-color: var(--zen-accent);
+    font-weight: 600;
+}
